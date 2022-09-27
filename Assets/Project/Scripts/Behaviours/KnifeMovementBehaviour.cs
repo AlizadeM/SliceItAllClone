@@ -69,7 +69,7 @@ public class KnifeMovementBehaviour : MonoBehaviour
 
         rb.isKinematic = false;
         _knifeController._knifeTipCollisionBehaviour.GetComponent<Collider>().enabled = false;
-        yield return new WaitForSeconds(0.7f);
+        yield return new WaitForSeconds(0.5f);
         IsKnifeStuck = false;
         _knifeController._knifeTipCollisionBehaviour.GetComponent<Collider>().enabled = true;
 

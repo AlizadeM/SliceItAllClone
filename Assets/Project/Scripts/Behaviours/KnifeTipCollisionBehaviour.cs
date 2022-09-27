@@ -14,11 +14,8 @@ public class KnifeTipCollisionBehaviour : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("ground"))
-        {
-            if (_knifeController._knifeMovementBehaviour.IsKnifeStuck)
-                return;
-            else
-                _knifeController._knifeMovementBehaviour.KnifeStuckCo();
+        { 
+            _knifeController._knifeMovementBehaviour.KnifeStuckCo();
         }
 
     }
