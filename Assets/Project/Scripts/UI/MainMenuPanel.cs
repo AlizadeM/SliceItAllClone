@@ -6,7 +6,6 @@
     public override void Initialize(UIManager uiManager)
     {
         base.Initialize(uiManager);
-        ButtonPlay.Initialize(uiManager, StartGame);
     }
 
     private void OnDestroy()

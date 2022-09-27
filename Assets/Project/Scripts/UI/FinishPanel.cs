@@ -17,9 +17,6 @@ public class FinishPanel : UIPanel
     {
         base.Initialize(uiManager);
 
-        ButtonNext.Initialize(uiManager, ClickNext);
-        ButtonRetry.Initialize(uiManager, ClickRetry);
-
         GameManager.EventManager.OnLevelFinished += SetWinLosePanel;
         GameManager.EventManager.OnLevelStarted += RefreshPanels;
     }
