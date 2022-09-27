@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using EzySlice;
+using System;
 
 public class SlicingTool : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class SlicingTool : MonoBehaviour
     public float explosionForce;
     public float exposionRadius;
     public bool gravity, kinematic;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -38,5 +40,6 @@ public class SlicingTool : MonoBehaviour
         rigidbody.AddExplosionForce(explosionForce, obj.transform.position, exposionRadius);
         // Destroy(obj,3f);
     }
+
 }
 
