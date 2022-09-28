@@ -91,6 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelBehaviours:
   - {fileID: -971533227850767274, guid: 88e644c10d8052646ad21d46ec88245c, type: 3}
+  - {fileID: -971533227850767274, guid: cd089158cc70ff54b932a6d9f19ad65d, type: 3}
 --- !u!1 &2912551836459484447
 GameObject:
   m_ObjectHideFlags: 0

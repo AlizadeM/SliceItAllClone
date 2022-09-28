@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 7889387986796766875}
   - component: {fileID: 2350468725023833953}
   m_Layer: 6
-  m_Name: Knife
+  m_Name: KnifeController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -440,7 +440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d33269437825aa740a46c928a657c08a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 4005865452987071085}
+  _rigidBody: {fileID: 4005865452987071085}
   _jumpForce: {x: 20, y: 60, z: 0}
   _jumpForceY: {x: 0, y: 80, z: 0}
   _rotateForce: {x: 0, y: 0, z: -750}
@@ -456,7 +456,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e21446b1d23d13408f473cab60550a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pointsPerObject: 1
   _knifeMovementBehaviour: {fileID: 7889387986796766875}
   _knifeCollisionBehaviour: {fileID: 4005865452987071084}
   _knifeTipCollisionBehaviour: {fileID: 6592595794090854041}
