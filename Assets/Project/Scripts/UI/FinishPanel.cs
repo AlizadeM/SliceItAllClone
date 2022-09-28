@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FinishPanel : UIPanel
 {
@@ -9,8 +10,8 @@ public class FinishPanel : UIPanel
     public GameObject WinPanel;
     public GameObject LosePanel;
 
-    public CustomButton ButtonNext;
-    public CustomButton ButtonRetry;
+    public Button ButtonNext;
+    public Button ButtonRetry;
 
 
     public override void Initialize(UIManager uiManager)
@@ -58,13 +59,14 @@ public class FinishPanel : UIPanel
     }
 
 
-    private void ClickNext()
+    public void ClickNext()
     {
-
+        Debug.Log("continue");
+        GameManager.LevelManager.ContinueToNextLevel();
     }
 
-    private void ClickRetry()
+    public void ClickRetry()
     {
-
+        GameManager.LevelManager.RetryCurrentLevel();
     }
 }

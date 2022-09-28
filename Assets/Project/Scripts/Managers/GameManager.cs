@@ -11,7 +11,6 @@ public class GameManager : CustomBehaviour
     public EventManager EventManager;
     public LevelManager LevelManager;
     public InputController Inputs;
-    public KnifeController KnifeController;
 
     public void Awake()
     {
@@ -22,7 +21,6 @@ public class GameManager : CustomBehaviour
         CameraManager.Initialize(this);
         LevelManager.Initialize(this);
         Inputs.Initialize(this);
-        KnifeController.Initialize(this);
     }
 
     private void Start()

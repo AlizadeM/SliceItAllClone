@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,16 +11,24 @@ public class LevelBehaviour : CustomBehaviour
 
     [SerializeField] private float _winPanelDelayTime;
     [SerializeField] private float _losePanelDelayTime;
+    [SerializeField] private KnifeController _knifeController;
+    [SerializeField] private Transform _knifeStartTransform;
+    [SerializeField] private Cinemachine.CinemachineVirtualCamera _knifeFollowCam;
+    [SerializeField] private Vector3 _cameraOffset;
 
     private bool _isLevelEnded;
 
     public override void Initialize(GameManager gameManager)
     {
         base.Initialize(gameManager);
-
         GameManager.EventManager.StartLevel();
+        var knife = Instantiate(_knifeController.gameObject,_knifeStartTransform.position,Quaternion.identity,transform);
+        knife.GetComponent<KnifeController>().Initialize(gameManager);
+        _knifeFollowCam.Follow = knife.transform;
+        var transposer = _knifeFollowCam.GetCinemachineComponent<CinemachineTransposer>();
+        transposer.m_FollowOffset = new Vector3(-15,40,-53);
     }
-
+   
     private void Update()
     {
         if (Input.GetKeyDown("c"))
@@ -38,7 +47,7 @@ public class LevelBehaviour : CustomBehaviour
         
     }
 
-    private void LevelCompleted()
+    public void LevelCompleted()
     {
         if (_isLevelEnded) return;
 
@@ -47,7 +56,7 @@ public class LevelBehaviour : CustomBehaviour
         _isLevelEnded = true;
     }
 
-    private void LevelFailed()
+    public void LevelFailed()
     {
         if (_isLevelEnded) return;
 

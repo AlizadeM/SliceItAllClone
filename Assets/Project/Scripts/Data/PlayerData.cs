@@ -16,5 +16,14 @@ namespace MangoramaStudio.Scripts.Data
                 PlayerPrefs.SetInt("CurrentLevelId", value);
             }
         }
+        public static int TotalScore
+        {
+            get => PlayerPrefs.GetInt("TotalScore", 0);
+
+            set
+            {
+                PlayerPrefs.SetInt("TotalScore", value);
+            }
+        }
     }
 }

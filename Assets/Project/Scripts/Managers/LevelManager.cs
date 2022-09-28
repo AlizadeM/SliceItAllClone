@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class LevelManager : CustomBehaviour
 {
+    public LevelBehaviour CurrentLevel => _currentLevel;
+
     [SerializeField] private List<LevelBehaviour> _levelBehaviours;
 
     private LevelBehaviour _currentLevel;

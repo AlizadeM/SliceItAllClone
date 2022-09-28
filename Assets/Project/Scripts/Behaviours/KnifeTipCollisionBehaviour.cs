@@ -10,6 +10,7 @@ public class KnifeTipCollisionBehaviour : MonoBehaviour
     [SerializeField] private LayerMask _detectionLayerMask;
     private KnifeController _knifeController;
     private GameObject _currentTower;
+    private MultiplierCubeBehaviour _currentMultiplier;
     public void Initialize(KnifeController knifeController)
     {
         _knifeController = knifeController;
@@ -26,7 +27,16 @@ public class KnifeTipCollisionBehaviour : MonoBehaviour
         {
             _knifeController._knifeMovementBehaviour.KnifeTowerSlicingMovement();
         }
-
+        if (other.CompareTag("Multiplier"))
+        {
+            if (_currentMultiplier == null)
+            {
+                _knifeController._knifeMovementBehaviour.KnifeStuckCo();
+                _currentMultiplier = other.GetComponent<MultiplierCubeBehaviour>();
+                _knifeController.MultiplierCubeReached(_currentMultiplier);
+                
+            }
+        }
     }
 
     //private void OnTriggerExit(Collider other)
