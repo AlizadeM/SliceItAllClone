@@ -4,17 +4,20 @@ using UnityEngine;
 using EzySlice;
 using System;
 using MangoramaStudio.Scripts.Data;
+using Random = UnityEngine.Random;
 
 public class SlicingTool : MonoBehaviour
 {
 
-    public Material materialSlicedSide;
-    public float explosionForce;
-    public float exposionRadius;
-    public bool gravity, kinematic;
+    public event Action OnObjectSliced;
+
+    [SerializeField] private List<Material> _materialSlicedSide;
+    [SerializeField] private float _explosionForce;
+    [SerializeField] private bool _gravity, _kinematic;
+    [SerializeField] private LayerMask _slicedObjectLayerMask;
+
     private KnifeController _knifeController;
 
-    public event Action OnObjectSliced;
 
     public void Initialize(KnifeController knifeController)
     {
@@ -25,12 +28,12 @@ public class SlicingTool : MonoBehaviour
     {
         if (other.gameObject.CompareTag("SliceableObject"))
         {
-            SlicedHull sliceobj = Slice(other.gameObject, materialSlicedSide);
-            GameObject SlicedobjTop = sliceobj.CreateUpperHull(other.gameObject, materialSlicedSide);
-            GameObject SliceObjDown = sliceobj.CreateLowerHull(other.gameObject, materialSlicedSide);
+            SlicedHull sliceobj = Slice(other.gameObject, _materialSlicedSide[Random.Range(0, _materialSlicedSide.Count - 1)]);
+            GameObject SlicedobjTop = sliceobj.CreateUpperHull(other.gameObject, _materialSlicedSide[Random.Range(0, _materialSlicedSide.Count - 1)]);
+            GameObject SliceObjDown = sliceobj.CreateLowerHull(other.gameObject, _materialSlicedSide[Random.Range(0, _materialSlicedSide.Count - 1)]);
             Destroy(other.gameObject);
-            AddComponent(SlicedobjTop);
-            AddComponent(SliceObjDown);
+            AddComponent(SlicedobjTop, -1);
+            AddComponent(SliceObjDown, 1);
         }
     }
 
@@ -40,14 +43,15 @@ public class SlicingTool : MonoBehaviour
         return obj.Slice(transform.position, direction: transform.up, mat);
     }
 
-    void AddComponent(GameObject obj)
+    void AddComponent(GameObject obj, int direction)
     {
         obj.AddComponent<BoxCollider>();
         var rigidbody = obj.AddComponent<Rigidbody>();
-        rigidbody.useGravity = gravity;
-        rigidbody.isKinematic = kinematic;
-        rigidbody.AddExplosionForce(explosionForce, obj.transform.position, exposionRadius);
+        rigidbody.useGravity = _gravity;
+        rigidbody.isKinematic = _kinematic;
+        rigidbody.AddForce(Vector3.forward * _explosionForce * direction, ForceMode.Impulse);
         obj.transform.parent = _knifeController.GameManager.LevelManager.CurrentLevel.transform;
+        obj.layer = _slicedObjectLayerMask;
     }
 
 }
