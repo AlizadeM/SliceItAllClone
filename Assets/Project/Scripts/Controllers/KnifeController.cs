@@ -26,19 +26,26 @@ public class KnifeController : CustomBehaviour
         _knifeTipCollisionBehaviour.Initialize(this);
         _slicingTool.Initialize(this);
         _slicingTool.OnObjectSliced += AddPoints;
+        _points = 0;
 
     }
 
     public void AddPoints()
     {
         _points += _pointsPerObject;
+        GameManager.UIManager.inGamePanel.PopulateView(PlayerData.TotalScore + _points);
     }
 
     public void MultiplierCubeReached(MultiplierCubeBehaviour currentMultiplier)
     {
         _points *= currentMultiplier.MultiplierValue;
-        PlayerData.TotalScore = _points;
+        PlayerData.TotalScore += _points;
+        GameManager.UIManager.inGamePanel.PopulateView(PlayerData.TotalScore);
         GameManager.LevelManager.CurrentLevel.LevelCompleted();
+    }
 
+    public void LevelFailed()
+    {
+        GameManager.LevelManager.CurrentLevel.LevelFailed();
     }
 }
