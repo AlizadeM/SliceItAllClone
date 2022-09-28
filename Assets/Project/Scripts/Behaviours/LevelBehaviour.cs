@@ -26,7 +26,7 @@ public class LevelBehaviour : CustomBehaviour
         knife.GetComponent<KnifeController>().Initialize(gameManager);
         _knifeFollowCam.Follow = knife.transform;
         var transposer = _knifeFollowCam.GetCinemachineComponent<CinemachineTransposer>();
-        transposer.m_FollowOffset = new Vector3(-15,40,-53);
+        transposer.m_FollowOffset = new Vector3(-27,60,-118);
     }
    
     private void Update()
