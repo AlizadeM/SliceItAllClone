@@ -27,7 +27,6 @@ public class KnifeController : CustomBehaviour
         _slicingTool.Initialize(this);
         _slicingTool.OnObjectSliced += AddPoints;
         _points = 0;
-
     }
 
     public void AddPoints()
@@ -47,5 +46,11 @@ public class KnifeController : CustomBehaviour
     public void LevelFailed()
     {
         GameManager.LevelManager.CurrentLevel.LevelFailed();
+    }
+
+    public void LevelCompletedWithoutMultiplier()
+    {
+        PlayerData.TotalScore += _points;
+        GameManager.LevelManager.CurrentLevel.LevelCompleted();
     }
 }

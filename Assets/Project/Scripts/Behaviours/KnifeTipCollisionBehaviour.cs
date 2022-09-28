@@ -23,10 +23,7 @@ public class KnifeTipCollisionBehaviour : MonoBehaviour
         {
             _knifeController._knifeMovementBehaviour.KnifeStuckCo();
         }
-        if (other.CompareTag("Tower"))
-        {
-            _knifeController._knifeMovementBehaviour.KnifeTowerSlicingMovement();
-        }
+
         if (other.CompareTag("Multiplier"))
         {
             if (_currentMultiplier == null)
@@ -36,6 +33,16 @@ public class KnifeTipCollisionBehaviour : MonoBehaviour
                 _knifeController.MultiplierCubeReached(_currentMultiplier);
                 
             }
+        }
+
+        if (other.CompareTag("OutOfBounds") || other.CompareTag("Trap"))
+        {
+            _knifeController.LevelFailed();
+        }
+
+        if (other.CompareTag("Finish"))
+        {
+            _knifeController.LevelCompletedWithoutMultiplier();
         }
     }
 
@@ -63,7 +70,6 @@ public class KnifeTipCollisionBehaviour : MonoBehaviour
                     //    break;
                     _currentTower = towers[0].gameObject;
                     _knifeController._knifeMovementBehaviour.KnifeTowerSlicingMovement();
-                    Debug.Log("TowerTriggerEnter");
                 }
             }
 
@@ -73,8 +79,6 @@ public class KnifeTipCollisionBehaviour : MonoBehaviour
                 {
                     _currentTower = null;
                     _knifeController._knifeMovementBehaviour.KnifeTowerSlicingMovementEnded();
-                    Debug.Log("TowerTriggerEXITTTTT");
-
                 }
             }
         }
