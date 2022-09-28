@@ -9,6 +9,8 @@ TagManager:
   - CanSlice
   - Tower
   - Multiplier
+  - OutOfBounds
+  - Trap
   layers:
   - Default
   - TransparentFX
