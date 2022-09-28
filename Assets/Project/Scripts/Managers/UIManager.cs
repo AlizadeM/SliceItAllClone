@@ -17,7 +17,6 @@ public class UIManager : CustomBehaviour
     public override void Initialize(GameManager gameManager)
     {
         base.Initialize(gameManager);
-        //UIPanels = new List<UIPanel> {mainMenuPanel, hudPanel, diamondPanel, finishPanel, settingsPanel, _inGamePanel };
         UIPanels = new List<UIPanel> { mainMenuPanel, finishPanel, inGamePanel };
 
         UIPanels.ForEach(x =>
@@ -25,7 +24,6 @@ public class UIManager : CustomBehaviour
             x.Initialize(this);
             x.gameObject.SetActive(false);
         });
-        //mainMenuPanel.ShowPanel();
         inGamePanel.ShowPanel();
     }
 }

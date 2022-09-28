@@ -216,17 +216,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!114 &547102663 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7197900845898146744, guid: 9d7f94f7b9a6e5e43ba4231d94c7ab66, type: 3}
-  m_PrefabInstance: {fileID: 1222372958}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &654694041
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,10 +312,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1859693319}
-    - target: {fileID: 8442034374603290453, guid: 9d7f94f7b9a6e5e43ba4231d94c7ab66, type: 3}
-      propertyPath: _totalMoneyText
-      value: 
-      objectReference: {fileID: 547102663}
     - target: {fileID: 8442034375306108955, guid: 9d7f94f7b9a6e5e43ba4231d94c7ab66, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -539,14 +524,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2457491644923544532, guid: e3c09b970e97cbd40ae989349da692c3, type: 3}
-      propertyPath: _levelBehaviours.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2457491644923544532, guid: e3c09b970e97cbd40ae989349da692c3, type: 3}
-      propertyPath: _levelBehaviours.Array.data[0]
-      value: 
-      objectReference: {fileID: -971533227850767274, guid: cd089158cc70ff54b932a6d9f19ad65d, type: 3}
     - target: {fileID: 3347951715124433610, guid: e3c09b970e97cbd40ae989349da692c3, type: 3}
       propertyPath: m_RootOrder
       value: 2
