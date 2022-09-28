@@ -10,6 +10,9 @@ namespace MangoramaStudio.Scripts.UI
     {
 
         [SerializeField] private Text _totalMoneyText;
+        [SerializeField] private Text _sliceComboText;
+
+        private Coroutine _sliceComboTextRoutine;
 
         public override void Initialize(UIManager uiManager)
         {
@@ -25,6 +28,24 @@ namespace MangoramaStudio.Scripts.UI
         public void PopulateView(int value)
         {
             _totalMoneyText.text = value.ToString();
+        }
+
+        public void StartShowSliceCounter(int value)
+        {
+            if (_sliceComboTextRoutine != null)
+            {
+                StopCoroutine(_sliceComboTextRoutine);
+                _sliceComboTextRoutine = null;
+            }
+            _sliceComboTextRoutine = StartCoroutine(ShowSliceComboTextCo(value));
+        }
+
+        private IEnumerator ShowSliceComboTextCo(int value)
+        {
+            _sliceComboText.SetActive(true);
+            _sliceComboText.text = value.ToString() + "X COMBO!";
+            yield return new WaitForSeconds(2f);
+            _sliceComboText.SetActive(false);
         }
 
     }

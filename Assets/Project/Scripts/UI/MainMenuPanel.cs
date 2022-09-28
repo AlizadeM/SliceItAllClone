@@ -1,6 +1,9 @@
-﻿public class MainMenuPanel : UIPanel
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+public class MainMenuPanel : UIPanel
 {
-    public CustomButton ButtonPlay;
+    [SerializeField] private Button _startButton;
     /****************************************************************************************/
 
     public override void Initialize(UIManager uiManager)
@@ -10,11 +13,20 @@
 
     private void OnDestroy()
     {
+
     }
 
     /****************************************************************************************/
-    private void StartGame()
+
+    public void ShowMainMenu()
     {
+        Time.timeScale = 0;
+        ShowPanel();
+    }
+
+    public void StartGame()
+    {
+        Time.timeScale = 1;
         UIManager.inGamePanel.ShowPanel();
         UIManager.mainMenuPanel.HidePanel();
     }
