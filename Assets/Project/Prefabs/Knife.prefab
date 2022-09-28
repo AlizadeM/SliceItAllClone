@@ -169,11 +169,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a137a5b7e4ea704c99cf779ea9b8218, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  materialSlicedSide: {fileID: 2100000, guid: 2cd4af5554836764690e96046b651088, type: 2}
-  explosionForce: 2000
-  exposionRadius: 2000
-  gravity: 1
-  kinematic: 0
+  _materialSlicedSide:
+  - {fileID: 2100000, guid: 0624940da860d4341a45a61bef0f1c48, type: 2}
+  - {fileID: 2100000, guid: ebc35d42bb4105e4bb9aa9263dbcb88e, type: 2}
+  - {fileID: 2100000, guid: d9388ec941beb784fb36ee89067e56ab, type: 2}
+  - {fileID: 2100000, guid: d1022580e3a15894ea4f70956bed5437, type: 2}
+  - {fileID: 2100000, guid: 10f96d0c75114c24bb3035f039d879da, type: 2}
+  - {fileID: 2100000, guid: 1ede5dea3ba051644bebf6bfd8dbf47d, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _explosionForce: 50
+  _gravity: 1
+  _kinematic: 0
+  _slicedObjectLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &6592595794090854040
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +313,7 @@ GameObject:
   - component: {fileID: 4005865452987071084}
   - component: {fileID: 7889387986796766875}
   - component: {fileID: 2350468725023833953}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Knife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,8 +441,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 4005865452987071085}
-  _jumpForce: {x: 10, y: 40, z: 0}
-  _jumpForceY: {x: 0, y: 40, z: 0}
+  _jumpForce: {x: 20, y: 60, z: 0}
+  _jumpForceY: {x: 0, y: 80, z: 0}
   _rotateForce: {x: 0, y: 0, z: -750}
 --- !u!114 &2350468725023833953
 MonoBehaviour:
