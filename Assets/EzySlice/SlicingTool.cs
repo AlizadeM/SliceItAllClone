@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using EzySlice;
 using System;
+using MangoramaStudio.Scripts.Data;
 
 public class SlicingTool : MonoBehaviour
 {
@@ -11,7 +12,14 @@ public class SlicingTool : MonoBehaviour
     public float explosionForce;
     public float exposionRadius;
     public bool gravity, kinematic;
+    private KnifeController _knifeController;
 
+    public event Action OnObjectSliced;
+
+    public void Initialize(KnifeController knifeController)
+    {
+        _knifeController = knifeController;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -28,6 +36,7 @@ public class SlicingTool : MonoBehaviour
 
     private SlicedHull Slice(GameObject obj, Material mat)
     {
+        OnObjectSliced?.Invoke();
         return obj.Slice(transform.position, direction: transform.up, mat);
     }
 
@@ -38,7 +47,7 @@ public class SlicingTool : MonoBehaviour
         rigidbody.useGravity = gravity;
         rigidbody.isKinematic = kinematic;
         rigidbody.AddExplosionForce(explosionForce, obj.transform.position, exposionRadius);
-        // Destroy(obj,3f);
+        obj.transform.parent = _knifeController.GameManager.LevelManager.CurrentLevel.transform;
     }
 
 }
