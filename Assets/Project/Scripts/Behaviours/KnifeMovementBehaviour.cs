@@ -19,6 +19,8 @@ public class KnifeMovementBehaviour : MonoBehaviour
     private bool _isKnifeDebuffCleared;
     private bool _isKnifeSlicingTower;
     private bool _isKnifeSlicingDebuffCleared;
+    private Coroutine _knifeSlicingDebuffRoutine;
+    private Coroutine _knifeSlowDownDebuffRoutine;
 
     public void Initialize(KnifeController knifeController)
     {
@@ -39,18 +41,18 @@ public class KnifeMovementBehaviour : MonoBehaviour
 
     private void Update()
     {
-
         if (_isKnifeSlicingTower && !_isKnifeSlicingDebuffCleared)
         {
-            rb.angularVelocity = _rotateForce / 15 * Time.deltaTime;
+            if (gameObject.transform.localEulerAngles.z >= 0 && gameObject.transform.localEulerAngles.z <= 50)
+                rb.angularVelocity = _rotateForce / 15 * Time.deltaTime;
         }
 
         //Slows down knife on ideal rotation
-        if (rb.angularVelocity.z < -3)
+        if (rb.angularVelocity.z < - 3)
         {
             if ((gameObject.transform.localEulerAngles.z >= 0 && gameObject.transform.localEulerAngles.z <= 90) && !_isKnifeDebuffCleared)
             {
-                rb.AddTorque((-_rotateForce * 3) * Time.deltaTime, ForceMode.Acceleration);
+                rb.AddTorque((-_rotateForce * 4) * Time.deltaTime, ForceMode.Acceleration);
             }
         }
     }
@@ -59,22 +61,28 @@ public class KnifeMovementBehaviour : MonoBehaviour
     {
         if (IsKnifeStuck)
         {
-            StartCoroutine(KnifeUnstuck());
+            StartCoroutine(KnifeUnstuckCo());
         }
 
-        if (rb.velocity.x < 10f)
+        if (rb.velocity.x < 10f && rb.velocity.y < 70)
         {
             rb.AddForce(_jumpForce, ForceMode.Impulse);
         }
-        else
+
+        else if (rb.velocity.x > 10f && rb.velocity.y < 70)
         {
             rb.AddForce(_jumpForceY, ForceMode.Impulse);
+        }
+
+        else if (rb.velocity.x < 10f && rb.velocity.y > 70)
+        {
+            rb.AddForce(new Vector3(_jumpForce.x, 0, 0), ForceMode.Impulse);
         }
     }
 
     public void KnifeJumpBackwardsMovement()
     {
-        rb.AddForce(new Vector3(-_jumpForce.x * 10, _jumpForce.y * 40, 0) * Time.deltaTime, ForceMode.Impulse);
+        rb.AddForce(new Vector3(-_jumpForce.x * 20, _jumpForce.y * 60, 0) * Time.deltaTime, ForceMode.Impulse);
     }
 
     public void RotateKnife()
@@ -96,10 +104,6 @@ public class KnifeMovementBehaviour : MonoBehaviour
         }
     }
 
-    private void StartClearKnifeSlowDownDebuff()
-    {
-        StartCoroutine(ClearKnifeSlowDownDebuff());
-    }
 
     public void KnifeTowerSlicingMovement()
     {
@@ -110,38 +114,48 @@ public class KnifeMovementBehaviour : MonoBehaviour
     {
         _isKnifeSlicingTower = false;
     }
+    private void StartClearKnifeSlowDownDebuff()
+    {
+        if (_knifeSlowDownDebuffRoutine == null)
+        {
+            _knifeSlowDownDebuffRoutine = StartCoroutine(ClearKnifeSlowDownDebuffCo());
+        }
+    }
 
     private void StartClearKnifeSlicingDebuff()
     {
-        StartCoroutine(ClearKnifeTowerSlicingDebuff());
+        if (_knifeSlicingDebuffRoutine == null)
+        {
+            _knifeSlicingDebuffRoutine = StartCoroutine(ClearKnifeTowerSlicingDebuffCo());
+        }
     }
 
-    private IEnumerator ClearKnifeTowerSlicingDebuff()
+    private IEnumerator ClearKnifeTowerSlicingDebuffCo()
     {
-        _isKnifeSlicingDebuffCleared = true;
-        yield return new WaitForSeconds(4f);
-        _isKnifeSlicingDebuffCleared = false;
+        if (_isKnifeSlicingTower)
+        {
+            _isKnifeSlicingDebuffCleared = true;
+            yield return new WaitForSeconds(1f);
+            _isKnifeSlicingDebuffCleared = false;
+            _knifeSlicingDebuffRoutine = null;
+        }
     }
 
-    private IEnumerator KnifeUnstuck()
+    private IEnumerator KnifeUnstuckCo()
     {
-
         rb.isKinematic = false;
         _knifeController._knifeTipCollisionBehaviour.GetComponent<Collider>().enabled = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.4f);
         IsKnifeStuck = false;
         _knifeController._knifeTipCollisionBehaviour.GetComponent<Collider>().enabled = true;
     }
 
-    private IEnumerator ClearKnifeSlowDownDebuff()
+    private IEnumerator ClearKnifeSlowDownDebuffCo()
     {
-        if (gameObject.transform.localEulerAngles.z >= 0 && gameObject.transform.localEulerAngles.z <= 90)
-        {
-            _isKnifeDebuffCleared = true;
-            yield return new WaitForSeconds(0.5f);
-            _isKnifeDebuffCleared = false;
-        }
-
+        _isKnifeDebuffCleared = true;
+        yield return new WaitForSeconds(0.4f);
+        _isKnifeDebuffCleared = false;
+        _knifeSlowDownDebuffRoutine = null;
     }
 
 }
