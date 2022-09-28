@@ -2,6 +2,7 @@ using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LevelBehaviour : CustomBehaviour
@@ -27,6 +28,7 @@ public class LevelBehaviour : CustomBehaviour
         _knifeFollowCam.Follow = knife.transform;
         var transposer = _knifeFollowCam.GetCinemachineComponent<CinemachineTransposer>();
         transposer.m_FollowOffset = new Vector3(-27,60,-118);
+        GameManager.UIManager.mainMenuPanel.ShowMainMenu();
     }
    
     private void Update()

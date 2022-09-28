@@ -8,9 +8,11 @@ using UnityEngine;
 public class KnifeTipCollisionBehaviour : MonoBehaviour
 {
     [SerializeField] private LayerMask _detectionLayerMask;
+
     private KnifeController _knifeController;
     private GameObject _currentTower;
     private MultiplierCubeBehaviour _currentMultiplier;
+
     public void Initialize(KnifeController knifeController)
     {
         _knifeController = knifeController;

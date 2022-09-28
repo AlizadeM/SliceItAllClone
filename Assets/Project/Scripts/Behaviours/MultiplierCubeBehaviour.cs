@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 public class MultiplierCubeBehaviour : MonoBehaviour
 {
-    [SerializeField] private Text _canvasMultiplierText;
     public int MultiplierValue;
+
+    [SerializeField] private Text _canvasMultiplierText;
 
     private void Awake()
     {

@@ -23,6 +23,7 @@ public class KnifeHandleCollisionBehaviour : MonoBehaviour
             {
                 _knifeController._knifeMovementBehaviour.KnifeJumpBackwardsMovement();
                 _knifeController._knifeMovementBehaviour.RotateKnifeAfterCollision();
+                _knifeController.ResetSliceComboPoints();
             }
         }
     }

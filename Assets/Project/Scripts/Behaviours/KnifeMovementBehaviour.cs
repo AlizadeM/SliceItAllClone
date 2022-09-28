@@ -7,20 +7,20 @@ using UnityEngine;
 
 public class KnifeMovementBehaviour : MonoBehaviour
 {
-    public bool IsKnifeDebuffCleared => _isKnifeDebuffCleared;
     public bool IsKnifeStuck { get; set; }
 
-    [SerializeField] private Rigidbody rb;
+    [SerializeField] private Rigidbody _rigidBody;
     [SerializeField] private Vector3 _jumpForce;
     [SerializeField] private Vector3 _jumpForceY;
     [SerializeField] private Vector3 _rotateForce;
 
-    private KnifeController _knifeController;
-    private bool _isKnifeDebuffCleared;
-    private bool _isKnifeSlicingTower;
-    private bool _isKnifeSlicingDebuffCleared;
     private Coroutine _knifeSlicingDebuffRoutine;
     private Coroutine _knifeSlowDownDebuffRoutine;
+    private KnifeController _knifeController;
+    private bool _isKnifeSlicingDebuffCleared;
+    private bool _isKnifeDebuffCleared;
+    private bool _isKnifeSlicingTower;
+    private float _maxKnifeSpeed = 70;
 
     public void Initialize(KnifeController knifeController)
     {
@@ -41,19 +41,26 @@ public class KnifeMovementBehaviour : MonoBehaviour
 
     private void Update()
     {
+        //Positions knife on SliceableObject Tower
+
         if (_isKnifeSlicingTower && !_isKnifeSlicingDebuffCleared)
         {
             if (gameObject.transform.localEulerAngles.z >= 0 && gameObject.transform.localEulerAngles.z <= 50)
-                rb.angularVelocity = _rotateForce / 15 * Time.deltaTime;
+                _rigidBody.angularVelocity = _rotateForce / 15 * Time.deltaTime;
         }
 
         //Slows down knife on ideal rotation
-        if (rb.angularVelocity.z < - 3)
+        if (_rigidBody.angularVelocity.z < -2.5)
         {
             if ((gameObject.transform.localEulerAngles.z >= 0 && gameObject.transform.localEulerAngles.z <= 90) && !_isKnifeDebuffCleared)
             {
-                rb.AddTorque((-_rotateForce * 4) * Time.deltaTime, ForceMode.Acceleration);
+                _rigidBody.AddTorque((-_rotateForce * 4) * Time.deltaTime, ForceMode.Acceleration);
             }
+        }
+
+        if (_rigidBody.velocity.magnitude > _maxKnifeSpeed)
+        {
+            _rigidBody.velocity = Vector3.ClampMagnitude(_rigidBody.velocity, _maxKnifeSpeed);
         }
     }
 
@@ -64,42 +71,43 @@ public class KnifeMovementBehaviour : MonoBehaviour
             StartCoroutine(KnifeUnstuckCo());
         }
 
-        if (rb.velocity.x < 10f && rb.velocity.y < 70)
+
+        if (_rigidBody.velocity.x < 10f && _rigidBody.velocity.y < 70)
         {
-            rb.AddForce(_jumpForce, ForceMode.Impulse);
+            _rigidBody.AddForce(_jumpForce, ForceMode.Impulse);
         }
 
-        else if (rb.velocity.x > 10f && rb.velocity.y < 70)
+        else if (_rigidBody.velocity.x > 10f && _rigidBody.velocity.y < 70)
         {
-            rb.AddForce(_jumpForceY, ForceMode.Impulse);
+            _rigidBody.AddForce(_jumpForceY, ForceMode.Impulse);
         }
 
-        else if (rb.velocity.x < 10f && rb.velocity.y > 70)
+        else if (_rigidBody.velocity.x < 10f && _rigidBody.velocity.y > 70)
         {
-            rb.AddForce(new Vector3(_jumpForce.x, 0, 0), ForceMode.Impulse);
+            _rigidBody.AddForce(new Vector3(_jumpForce.x, 0, 0), ForceMode.Impulse);
         }
     }
 
     public void KnifeJumpBackwardsMovement()
     {
-        rb.AddForce(new Vector3(-_jumpForce.x * 20, _jumpForce.y * 60, 0) * Time.deltaTime, ForceMode.Impulse);
+        _rigidBody.AddForce(new Vector3(-_jumpForce.x * 20, _jumpForce.y * 60, 0) * Time.deltaTime, ForceMode.Impulse);
     }
 
     public void RotateKnife()
     {
-        rb.AddTorque(_rotateForce, ForceMode.Acceleration);
+        _rigidBody.AddTorque(_rotateForce, ForceMode.Acceleration);
     }
 
     public void RotateKnifeAfterCollision()
     {
-        rb.AddTorque(_rotateForce / 5f, ForceMode.Acceleration);
+        _rigidBody.AddTorque(_rotateForce / 5f, ForceMode.Acceleration);
     }
 
     public void KnifeStuckCo()
     {
         if (!IsKnifeStuck)
         {
-            rb.isKinematic = true;
+            _rigidBody.isKinematic = true;
             IsKnifeStuck = true;
         }
     }
@@ -143,7 +151,7 @@ public class KnifeMovementBehaviour : MonoBehaviour
 
     private IEnumerator KnifeUnstuckCo()
     {
-        rb.isKinematic = false;
+        _rigidBody.isKinematic = false;
         _knifeController._knifeTipCollisionBehaviour.GetComponent<Collider>().enabled = false;
         yield return new WaitForSeconds(0.4f);
         IsKnifeStuck = false;
