@@ -22,7 +22,7 @@ public class KnifeHandleCollisionBehaviour : MonoBehaviour
             if (!_knifeController._knifeMovementBehaviour.IsKnifeStuck)
             {
                 _knifeController._knifeMovementBehaviour.KnifeJumpBackwardsMovement();
-                _knifeController._knifeMovementBehaviour.RotateKnife();
+                _knifeController._knifeMovementBehaviour.RotateKnifeAfterCollision();
             }
         }
     }

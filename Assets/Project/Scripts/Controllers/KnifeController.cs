@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class KnifeController : CustomBehaviour
 {
-    public bool IsReadyToSlice;
 
     public KnifeMovementBehaviour _knifeMovementBehaviour;
     public KnifeHandleCollisionBehaviour _knifeCollisionBehaviour;
